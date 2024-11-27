@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test MercadoPago</title>
+</head>
+<body>
+    <button onclick="crearPreferencia()">Crear Preferencia de Pago</button>
+    <div id="resultado"></div>
+
+    <script>
+        function crearPreferencia() {
+            fetch('http://localhost:5000/create_preference', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    title: "Producto de Prueba",
+                    price: 100
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('resultado').innerHTML = 
+                    `ID de preferencia creada: ${data.id}`;
+                console.log('Respuesta:', data);
+            })
+            .catch(error => {
+                document.getElementById('resultado').innerHTML = 
+                    `Error: ${error.message}`;
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>
