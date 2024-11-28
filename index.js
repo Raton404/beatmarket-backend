@@ -1,14 +1,13 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
-const path = require('path'); // Añadir esta importación
-const { sequelize } = require('./models');
+const path = require('path');
+const { sequelize, Beat, User, Order, License, SellerCredentials } = require('./models');
 const beatRoutes = require('./routes/beatRoutes');
 const authRoutes = require('./routes/authRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
 const licenseRoutes = require('./routes/licenseRoutes');
 const sellerRoutes = require('./routes/sellerRoutes');
-// Eliminar esta línea: const webhookRoutes = require('./routes/webhookRoutes');
 
 dotenv.config();
 
@@ -29,12 +28,11 @@ app.use('/api/webhook', express.raw({ type: 'application/json' }));
 app.use(express.json());
 
 // Rutas actualizadas
-app.use('/api/payment', paymentRoutes);  // Cambiado de '/api' a '/api/payment'
-app.use('/api/auth', authRoutes);        // Esta está bien
-app.use('/api/beats', beatRoutes);       // Esta está bien
-app.use('/api/licenses', licenseRoutes); // Cambiado de '/api' a '/api/licenses'
+app.use('/api/payment', paymentRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/beats', beatRoutes);
+app.use('/api/licenses', licenseRoutes);
 app.use('/api/seller', sellerRoutes);
-// Eliminar esta línea: app.use('/api', webhookRoutes);
 
 app.use((err, req, res, next) => {
     console.error('Error:', err.stack);
