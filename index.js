@@ -16,8 +16,26 @@ const app = express();
 app.use(cors({
     origin: ['https://beatmarket-frontend.vercel.app'],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    credentials: true
+    credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    exposedHeaders: ['Content-Type', 'Authorization']
 }));
+
+// Agregar middleware de logging
+app.use((req, res, next) => {
+    console.log('Request URL:', req.url);
+    console.log('Request Method:', req.method);
+    console.log('Request Headers:', req.headers);
+    
+    // Agregar headers CORS manualmente
+    res.header('Access-Control-Allow-Origin', 'https://beatmarket-frontend.vercel.app');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.header('Access-Control-Allow-Credentials', 'true');
+    
+    next();
+});
+
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Middleware especial para webhooks
