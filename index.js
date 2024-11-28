@@ -14,14 +14,10 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors());
-app.use((req, res, next) => {
-    if (req.path === '/api/webhook' || req.path === '/api/payment/webhook') {
-        next();
-    } else {
-        express.json()(req, res, next);
-    }
-});
+app.use(cors({
+    origin: ['https://beatmarket-frontend.vercel.app', 'http://localhost:5173'],
+    credentials: true
+  }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Middleware especial para webhooks
@@ -32,10 +28,17 @@ app.use('/api/webhook', express.raw({ type: 'application/json' }));
 app.use(express.json());
 
 // Rutas
-app.use('/api', paymentRoutes);
-app.use('/api/auth', authRoutes);
-app.use('/api/beats', beatRoutes);
-app.use('/api', licenseRoutes);
+app.use(cors({
+    origin: ['https://beatmarket-frontend.vercel.app', 'http://localhost:5173'],
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+}));
+
+// Rutas actualizadas
+app.use('/api/payment', paymentRoutes);  // Cambiado de '/api' a '/api/payment'
+app.use('/api/auth', authRoutes);        // Esta está bien
+app.use('/api/beats', beatRoutes);       // Esta está bien
+app.use('/api/licenses', licenseRoutes); // Cambiado de '/api' a '/api/licenses'
 app.use('/api/seller', sellerRoutes);
 // Eliminar esta línea: app.use('/api', webhookRoutes);
 
