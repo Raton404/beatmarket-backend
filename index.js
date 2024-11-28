@@ -15,7 +15,7 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
-    origin: ['https://beatmarket-frontend.vercel.app', 'http://localhost:5173'],
+    origin: ['https://beatmarket-frontend.vercel.app'],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     credentials: true
 }));
@@ -27,13 +27,6 @@ app.use('/api/webhook', express.raw({ type: 'application/json' }));
 
 // Middleware regular para el resto de las rutas
 app.use(express.json());
-
-// Rutas
-app.use(cors({
-    origin: ['https://beatmarket-frontend.vercel.app', 'http://localhost:5173'],
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
-}));
 
 // Rutas actualizadas
 app.use('/api/payment', paymentRoutes);  // Cambiado de '/api' a '/api/payment'
