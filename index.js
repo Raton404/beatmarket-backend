@@ -16,8 +16,9 @@ const app = express();
 
 app.use(cors({
     origin: ['https://beatmarket-frontend.vercel.app', 'http://localhost:5173'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     credentials: true
-  }));
+}));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Middleware especial para webhooks
