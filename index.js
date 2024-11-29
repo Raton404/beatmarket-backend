@@ -1,3 +1,17 @@
+const express = require('express');
+const cors = require('cors');
+const dotenv = require('dotenv');
+const path = require('path');
+const { sequelize } = require('./database');
+const { Beat, User, Order, License, SellerCredentials } = require('./models');
+const beatRoutes = require('./routes/beatRoutes');
+const authRoutes = require('./routes/authRoutes');
+const paymentRoutes = require('./routes/paymentRoutes');
+const licenseRoutes = require('./routes/licenseRoutes');
+const sellerRoutes = require('./routes/sellerRoutes');
+
+
+dotenv.config();
 const app = express();
 
 // Primero los middlewares básicos
