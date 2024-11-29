@@ -9,11 +9,11 @@ const sequelize = new Sequelize({
   database: process.env.DB_NAME,
   dialect: 'mysql',
   dialectModule: require('mysql2'),
-  logging: false, // Desactivamos logging en producción
+  logging: false,
   dialectOptions: {
     ssl: {
       require: true,
-      rejectUnauthorized: false // Cambiado a false para Railway
+      rejectUnauthorized: false
     }
   },
   pool: {
@@ -24,7 +24,6 @@ const sequelize = new Sequelize({
   }
 });
 
-// Función para probar la conexión
 const testConnection = async () => {
   try {
     await sequelize.authenticate();
@@ -36,9 +35,8 @@ const testConnection = async () => {
   }
 };
 
-// Solo ejecutar el test en desarrollo
 if (process.env.NODE_ENV !== 'production') {
   testConnection();
 }
 
-module.exports = { sequelize, testConnection };
+module.exports = { sequelize, Sequelize, testConnection };

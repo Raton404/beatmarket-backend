@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../database');
+const { sequelize } = require('../database');  // Notar la destructuración
 
 const Beat = sequelize.define('Beat', {
   id: {
