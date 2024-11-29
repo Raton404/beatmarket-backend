@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../database');
+const { sequelize } = require('../database'); // Añadimos las llaves {}
 
 const License = sequelize.define('License', {
     id: {
@@ -36,10 +36,10 @@ const License = sequelize.define('License', {
         defaultValue: false
     },
     termsAndConditions: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-      defaultValue: 'Términos estándar de la licencia'
-  }
+        type: DataTypes.TEXT,
+        allowNull: false,
+        defaultValue: 'Términos estándar de la licencia'
+    }
 });
 
 module.exports = License;
