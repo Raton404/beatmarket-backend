@@ -44,6 +44,9 @@ app.use('/api/auth', authRoutes);
 app.use('/api/beats', beatRoutes);
 app.use('/api/licenses', licenseRoutes);
 app.use('/api/seller', sellerRoutes);
+app.get('/', (req, res) => {
+    res.json({ status: 'API is running' });
+});
 
 // Middleware de manejo de errores
 app.use((err, req, res, next) => {
