@@ -81,7 +81,10 @@ if (process.env.NODE_ENV !== 'production') {
     });
 } else {
     // En producción (Vercel)
-    initializeDatabase();
+    initializeDatabase().catch(error => {
+        console.error('Error al inicializar la base de datos:', error);
+        process.exit(1); // Termina el proceso si hay un error de conexión
+    });
 }
 
 // Exportar la aplicación
