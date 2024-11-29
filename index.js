@@ -26,6 +26,7 @@ app.use((req, res, next) => {
     console.log('Request URL:', req.url);
     console.log('Request Method:', req.method);
     console.log('Request Headers:', req.headers);
+    module.exports = app;
     
 });
 
@@ -61,3 +62,5 @@ sequelize.sync({ alter: true })
     .catch(error => {
         console.error('Error al sincronizar la base de datos:', error);
     });
+
+module.exports = app;
