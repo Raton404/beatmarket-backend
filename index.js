@@ -10,7 +10,6 @@ const licenseRoutes = require('./routes/licenseRoutes');
 const sellerRoutes = require('./routes/sellerRoutes');
 
 dotenv.config();
-
 const app = express();
 
 app.use(cors({
@@ -26,8 +25,7 @@ app.use((req, res, next) => {
     console.log('Request URL:', req.url);
     console.log('Request Method:', req.method);
     console.log('Request Headers:', req.headers);
-    module.exports = app;
-    
+    next(); // Añadido el next() que faltaba
 });
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -46,21 +44,39 @@ app.use('/api/beats', beatRoutes);
 app.use('/api/licenses', licenseRoutes);
 app.use('/api/seller', sellerRoutes);
 
+// Middleware de manejo de errores
 app.use((err, req, res, next) => {
     console.error('Error:', err.stack);
     res.status(500).json({ error: err.message });
 });
 
-// Sincronizar base de datos y arrancar servidor
-sequelize.sync({ alter: true })
-    .then(() => {
+// Función para inicializar la base de datos
+const initializeDatabase = async () => {
+    try {
+        await sequelize.authenticate();
+        console.log('Conexión a la base de datos establecida correctamente.');
+        if (process.env.NODE_ENV !== 'production') {
+            await sequelize.sync({ alter: true });
+            console.log('Base de datos sincronizada.');
+        }
+    } catch (error) {
+        console.error('No se pudo conectar a la base de datos:', error);
+    }
+};
+
+// Inicializar la base de datos y el servidor
+if (process.env.NODE_ENV !== 'production') {
+    // En desarrollo
+    initializeDatabase().then(() => {
         const PORT = process.env.PORT || 5000;
         app.listen(PORT, () => {
             console.log(`Servidor corriendo en puerto ${PORT}`);
         });
-    })
-    .catch(error => {
-        console.error('Error al sincronizar la base de datos:', error);
     });
+} else {
+    // En producción (Vercel)
+    initializeDatabase();
+}
 
+// Exportar la aplicación
 module.exports = app;
