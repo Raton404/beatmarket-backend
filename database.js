@@ -3,29 +3,22 @@ require('dotenv').config();
 
 const sequelize = new Sequelize({
   host: process.env.DB_HOST,
-  port: process.env.DB_PORT || 22774,
-  username: process.env.DB_USER,
+  port: process.env.DB_PORT,
+  username: process.env.DB_USER,  
   password: process.env.DB_PASS,
   database: process.env.DB_NAME,
   dialect: 'mysql',
   dialectModule: require('mysql2'),
-  logging: false,
+  logging: console.log, // Para ver logs detallados
   dialectOptions: {
     connectTimeout: 60000,
-    ssl: {
-      require: true,
-      rejectUnauthorized: false
-    }
+    ssl: null // Deshabilitar SSL temporalmente
   },
   pool: {
-    max: 10,
+    max: 5,
     min: 0,
     acquire: 60000,
     idle: 10000
-  },
-  retry: {
-    max: 5,
-    timeout: 3000
   }
 });
 
