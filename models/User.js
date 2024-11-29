@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../database');
+const { sequelize } = require('../database'); // Aquí hacemos destructuring para obtener solo sequelize
 
 const User = sequelize.define('User', {
   id: {
