@@ -11,32 +11,39 @@ const sequelize = new Sequelize({
   dialectModule: require('mysql2'),
   logging: false,
   dialectOptions: {
+    connectTimeout: 60000,
     ssl: {
       require: true,
       rejectUnauthorized: false
     }
   },
   pool: {
-    max: 5,
+    max: 10,
     min: 0,
-    acquire: 30000,
+    acquire: 60000,
     idle: 10000
+  },
+  retry: {
+    max: 5,
+    timeout: 3000
   }
 });
 
 const testConnection = async () => {
-  try {
-    await sequelize.authenticate();
-    console.log('Conexión a la base de datos establecida correctamente.');
-    return true;
-  } catch (error) {
-    console.error('Error al conectar con la base de datos:', error);
-    return false;
+  let retries = 5;
+  while (retries) {
+    try {
+      await sequelize.authenticate();
+      console.log('Conexión establecida correctamente');
+      return true;
+    } catch (error) {
+      retries -= 1;
+      console.log(`Reintento ${5-retries}/5`);
+      await new Promise(res => setTimeout(res, 3000));
+    }
   }
+  console.error('No se pudo establecer conexión después de 5 intentos');
+  return false;
 };
-
-if (process.env.NODE_ENV !== 'production') {
-  testConnection();
-}
 
 module.exports = { sequelize, Sequelize, testConnection };
