@@ -10,7 +10,9 @@ const sequelize = new Sequelize({
   dialect: 'mysql',
   dialectModule: require('mysql2'),
   dialectOptions: {
+    connectTimeout: 30000,
     ssl: {
+      require: true,
       rejectUnauthorized: false
     }
   },
