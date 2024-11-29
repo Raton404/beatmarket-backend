@@ -9,7 +9,7 @@ const sequelize = new Sequelize({
   database: process.env.DB_NAME,
   dialect: 'mysql',
   dialectModule: require('mysql2'),
-  logging: true,
+  logging: false,
   ssl: true,
   dialectOptions: {
     ssl: {
