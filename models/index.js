@@ -1,4 +1,4 @@
-const { sequelize } = require('../database');
+const { Sequelize, sequelize } = require('../database');  // Importamos ambos
 const Beat = require('./Beat');
 const User = require('./User');
 const Order = require('./Order');
@@ -71,6 +71,7 @@ SellerCredentials.belongsTo(User, {
 });
 
 module.exports = {
+    Sequelize,  // Exportamos ambos
     sequelize,
     Beat,
     User,
