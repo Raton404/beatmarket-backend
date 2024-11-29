@@ -2,7 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const path = require('path');
-const { sequelize, Beat, User, Order, License, SellerCredentials } = require('./models');
+const { sequelize: db } = require('./database');
+const { Beat, User, Order, License, SellerCredentials } = require('./models');
 const beatRoutes = require('./routes/beatRoutes');
 const authRoutes = require('./routes/authRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
@@ -53,14 +54,16 @@ app.use((err, req, res, next) => {
 // Función para inicializar la base de datos
 const initializeDatabase = async () => {
     try {
-        await sequelize.authenticate();
+        await db.authenticate(); // Usar la instancia importada directamente
+        console.log('Ambiente:', process.env.NODE_ENV);
         console.log('Conexión a la base de datos establecida correctamente.');
         if (process.env.NODE_ENV !== 'production') {
-            await sequelize.sync({ alter: true });
+            await db.sync({ alter: true });
             console.log('Base de datos sincronizada.');
         }
     } catch (error) {
         console.error('No se pudo conectar a la base de datos:', error);
+        throw error; // Propagar el error para mejor manejo
     }
 };
 
