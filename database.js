@@ -2,22 +2,21 @@ const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
 const sequelize = new Sequelize({
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  username: process.env.DB_USER,  
+  host: 'junction.proxy.rlwy.net',  // Tu host correcto de Railway
+  port: 22774, // Puerto correcto
+  username: 'root',
   password: process.env.DB_PASS,
-  database: process.env.DB_NAME,
+  database: 'railway',
   dialect: 'mysql',
   dialectModule: require('mysql2'),
-  logging: console.log, // Para ver logs detallados
   dialectOptions: {
     connectTimeout: 60000,
-    ssl: null // Deshabilitar SSL temporalmente
+    ssl: true  // Railway requiere SSL
   },
   pool: {
-    max: 5,
+    max: 3,
     min: 0,
-    acquire: 60000,
+    acquire: 30000,
     idle: 10000
   }
 });
