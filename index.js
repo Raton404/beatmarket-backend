@@ -40,7 +40,8 @@ app.use(express.json());
 // Función para inicializar la base de datos
 const initializeDatabase = async () => {
     try {
-        console.log('Intentando conectar a la base de datos con configuración:', {
+        console.log('Ambiente:', process.env.NODE_ENV);
+        console.log('Variables de entorno en index:', {
             DB_HOST: process.env.DB_HOST,
             DB_NAME: process.env.DB_NAME,
             DB_USER: process.env.DB_USER,
