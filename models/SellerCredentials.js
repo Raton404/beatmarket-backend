@@ -27,6 +27,9 @@ const SellerCredentials = sequelize.define('SellerCredentials', {
         type: DataTypes.ENUM('active', 'inactive'),
         defaultValue: 'active'
     }
+}, {
+    tableName: 'sellercredentials',
+    timestamps: true
 });
 
 module.exports = SellerCredentials;

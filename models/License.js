@@ -40,6 +40,9 @@ const License = sequelize.define('License', {
         allowNull: false,
         defaultValue: 'Términos estándar de la licencia'
     }
+}, {
+    tableName: 'licenses',    // Especifica el nombre exacto de la tabla
+    timestamps: true       // Si usas timestamps (created_at, updated_at)
 });
-
+  
 module.exports = License;

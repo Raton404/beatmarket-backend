@@ -11,7 +11,7 @@ const Order = sequelize.define('Order', {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'Beats',
+            model: 'beats', // Cambiado a minúscula
             key: 'id'
         }
     },
@@ -19,7 +19,7 @@ const Order = sequelize.define('Order', {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'Licenses',
+            model: 'licenses', // Cambiado a minúscula
             key: 'id'
         }
     },
@@ -27,7 +27,7 @@ const Order = sequelize.define('Order', {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'Users',
+            model: 'users', // Cambiado a minúscula
             key: 'id'
         }
     },
@@ -35,7 +35,7 @@ const Order = sequelize.define('Order', {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'Users',
+            model: 'users', // Cambiado a minúscula
             key: 'id'
         }
     },
@@ -68,7 +68,8 @@ const Order = sequelize.define('Order', {
         allowNull: false
     }
 }, {
-    timestamps: true, // Habilita createdAt y updatedAt
+    tableName: 'orders', // Añadido el tableName
+    timestamps: true,
     indexes: [
         {
             fields: ['beatId']
