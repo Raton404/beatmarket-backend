@@ -43,6 +43,9 @@ const Beat = sequelize.define('Beat', {
     type: DataTypes.STRING,
     allowNull: true
   }
+}, {
+  tableName: 'beats',    // Especifica el nombre exacto de la tabla
+  timestamps: true       // Si usas timestamps (created_at, updated_at)
 });
 
 module.exports = Beat;
