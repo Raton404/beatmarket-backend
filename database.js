@@ -2,23 +2,20 @@ const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
 const sequelize = new Sequelize({
-    host: process.env.MYSQL_HOST || 'junction.proxy.rlwy.net',
-    database: process.env.MYSQL_DATABASE || 'railway',
-    username: process.env.MYSQL_USER || 'root',
-    password: process.env.MYSQL_PASSWORD || 'xSoHPRlBhKRRJyFBYtGYzHVRsaDvFUvz',
-    port: process.env.MYSQL_PORT || 22774,
-    dialect: 'mysql',
-    dialectModule: require('mysql2'),
-    logging: false,
-    pool: {
-        max: 5,
-        min: 0,
-        acquire: 60000,
-        idle: 10000
-    },
-    dialectOptions: {
-        connectTimeout: 60000
-    }
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  username: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  port: process.env.DB_PORT,
+  dialect: 'mysql',
+  dialectModule: require('mysql2'),
+  logging: false,
+  pool: {
+      max: 5,
+      min: 0,
+      acquire: 60000,
+      idle: 10000
+  }
 });
 
 const testConnection = async () => {
