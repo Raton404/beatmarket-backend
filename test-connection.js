@@ -2,24 +2,22 @@ const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
 const sequelize = new Sequelize({
+    host: process.env.MYSQL_HOST || 'junction.proxy.rlwy.net',
+    database: process.env.MYSQL_DATABASE || 'railway',
+    username: process.env.MYSQL_USER || 'root',
+    password: process.env.MYSQL_PASSWORD || 'xSoHPRlBhKRRJyFBYtGYzHVRsaDvFUvz',
+    port: process.env.MYSQL_PORT || 22774,
     dialect: 'mysql',
-    host: 'junction.proxy.rlwy.net',    // Del MYSQL_PUBLIC_URL
-    port: 22774,                        // Puerto público
-    username: 'root',                   // Del MYSQLUSER
-    password: 'xSoHPR1BhKRRJyFBYtGYzHVRsaDvFUvz',  // Del MYSQL_ROOT_PASSWORD
-    database: 'railway',                // Del MYSQL_DATABASE
     dialectModule: require('mysql2'),
     logging: false,
-    dialectOptions: {
-        ssl: {
-            rejectUnauthorized: false
-        }
-    },
     pool: {
         max: 5,
         min: 0,
         acquire: 60000,
         idle: 10000
+    },
+    dialectOptions: {
+        connectTimeout: 60000
     }
 });
 

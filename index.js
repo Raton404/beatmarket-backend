@@ -40,12 +40,21 @@ app.use(express.json());
 // Función para inicializar la base de datos
 const initializeDatabase = async () => {
     try {
+        console.log('Intentando conectar a la base de datos con configuración:', {
+            host: process.env.MYSQL_HOST,
+            database: process.env.MYSQL_DATABASE,
+            port: process.env.MYSQL_PORT,
+            user: process.env.MYSQL_USER
+        });
         await sequelize.authenticate();
-        console.log('Ambiente:', process.env.NODE_ENV);
-        console.log('Conexión a la base de datos establecida correctamente.');
+        console.log('Conexión establecida correctamente.');
         return true;
     } catch (error) {
-        console.error('Error al conectar con la base de datos:', error);
+        console.error('Error detallado de conexión:', {
+            name: error.name,
+            message: error.message,
+            original: error.original
+        });
         throw error;
     }
 };

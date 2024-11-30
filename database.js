@@ -2,9 +2,15 @@ const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
 // Usar la URL de conexión proporcionada por Railway
-const connectionString = process.env.MYSQL_URL || 'mysql://root:xSoHPR1BhKRRJyFBYtGYzHVRsaDvFUvz@junction.proxy.rlwy.net:22774/railway';
+const { Sequelize } = require('sequelize');
+require('dotenv').config();
 
-const sequelize = new Sequelize(connectionString, {
+const sequelize = new Sequelize({
+    host: process.env.MYSQL_HOST || 'junction.proxy.rlwy.net',
+    database: process.env.MYSQL_DATABASE || 'railway',
+    username: process.env.MYSQL_USER || 'root',
+    password: process.env.MYSQL_PASSWORD || 'xSoHPRlBhKRRJyFBYtGYzHVRsaDvFUvz',
+    port: process.env.MYSQL_PORT || 22774,
     dialect: 'mysql',
     dialectModule: require('mysql2'),
     logging: false,
@@ -13,6 +19,9 @@ const sequelize = new Sequelize(connectionString, {
         min: 0,
         acquire: 60000,
         idle: 10000
+    },
+    dialectOptions: {
+        connectTimeout: 60000
     }
 });
 
