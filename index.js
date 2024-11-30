@@ -41,10 +41,10 @@ app.use(express.json());
 const initializeDatabase = async () => {
     try {
         console.log('Intentando conectar a la base de datos con configuración:', {
-            host: process.env.MYSQL_HOST,
-            database: process.env.MYSQL_DATABASE,
-            port: process.env.MYSQL_PORT,
-            user: process.env.MYSQL_USER
+            DB_HOST: process.env.DB_HOST,
+            DB_NAME: process.env.DB_NAME,
+            DB_USER: process.env.DB_USER,
+            DB_PORT: process.env.DB_PORT
         });
         await sequelize.authenticate();
         console.log('Conexión establecida correctamente.');
