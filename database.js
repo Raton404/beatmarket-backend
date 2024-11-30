@@ -1,10 +1,6 @@
 const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
-// Usar la URL de conexión proporcionada por Railway
-const { Sequelize } = require('sequelize');
-require('dotenv').config();
-
 const sequelize = new Sequelize({
     host: process.env.MYSQL_HOST || 'junction.proxy.rlwy.net',
     database: process.env.MYSQL_DATABASE || 'railway',
